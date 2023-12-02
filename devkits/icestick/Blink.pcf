@@ -1,0 +1,36 @@
+#
+#set_io rst 47
+set_io red_leds[3] 99
+set_io red_leds[2] 98
+set_io red_leds[1] 97
+set_io red_leds[0] 96
+set_io led 95 # green led
+set_io clk 21
+#set_frequency clk 275
+set_frequency clk 12
+#set_io rxd 106
+#set_io txd 105
+#set_io sd 107
+
+# From BrunoLevy : https://github.com/BrunoLevy/learn-fpga/blob/master/FemtoRV/TUTORIALS/FROM_BLINKER_TO_RISCV/BOARDS/icestick.pcf
+#set_io CLK 21
+
+#set_io LEDS[0] 99
+#set_io LEDS[1] 98
+#set_io LEDS[2] 97
+#set_io LEDS[3] 96
+#set_io LEDS[4] 95
+#
+#set_io TXD  8
+#set_io RXD  9
+#
+#set_io SPIFLASH_CLK  70
+#set_io SPIFLASH_CS_N 71
+#
+#set_io SPIFLASH_MOSI 67
+#set_io SPIFLASH_MISO 68
+#
+#set_io SPIFLASH_IO[0] 67
+#set_io SPIFLASH_IO[1] 68
+#
+#set_io RESET 47
