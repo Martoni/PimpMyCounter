@@ -15,8 +15,8 @@ class Sp7Blink extends RawModule {
   withClockAndReset(clock, reset){
       val blink = Module(new Blink(44,
                                   LED_WIDTH=8,
-                                  COUNTTYPE=CounterTypes.NaturalCount))
-//                                  COUNTTYPE=CounterTypes.FullAdderCount))
+//                                  COUNTTYPE=CounterTypes.NaturalCount))
+                                  COUNTTYPE=CounterTypes.FullAdderCount))
       leds := blink.io.leds
   }
 }

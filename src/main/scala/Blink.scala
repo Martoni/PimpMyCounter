@@ -31,7 +31,7 @@ class Blink(val COUNT_WIDTH: Int = 32,
     }
     case CounterTypes.FullAdderCount => {
       println("Generate FullAdderCount of " + COUNT_WIDTH + " bits")
-      val counter = Module(new PdChain(COUNT_WIDTH))
+      val counter = Module(new FullAdderCount(COUNT_WIDTH))
       io.leds := counter.io.count(counter.counterSize-1, counter.counterSize-LED_WIDTH)
     }
   }
@@ -56,6 +56,8 @@ class FullAdderCount(val COUNT_WIDTH: Int = 32) extends Module {
     val count = Output(UInt(COUNT_WIDTH.W))
   })
 
+  val MAXCOUNT = BigInt(1) << COUNT_WIDTH
+  val counterSize = log2Ceil(MAXCOUNT)
   val counterValue = RegInit(0.U(COUNT_WIDTH.W))
   val addition = Module(new FullAdderAddition(COUNT_WIDTH))
   addition.io.a := counterValue
