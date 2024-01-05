@@ -83,10 +83,10 @@ class FullAdderAdditionTest extends AnyFlatSpec with ChiselScalatestTester {
 //}
 
 class FullAdderCountTest extends AnyFlatSpec with ChiselScalatestTester {
-  behavior of "FullAdderCount"
 
   val adderWidth = 9
 
+  behavior of "FullAdderCount"
   it should "Count normally" in {
     test(new FullAdderCount(adderWidth)).withAnnotations(Seq(WriteVcdAnnotation)) { dut =>
       for(i <- 0 until (1<<adderWidth)){
@@ -95,6 +95,17 @@ class FullAdderCountTest extends AnyFlatSpec with ChiselScalatestTester {
       }
     }
   }
+
+  behavior of "NaturalCount"
+  it should "Count naturally" in {
+    test(new NaturalCount(adderWidth)).withAnnotations(Seq(WriteVcdAnnotation)) { dut =>
+      for(i <- 0 until (1<<adderWidth)){
+        assert(dut.io.count.peek().litValue == i)
+        dut.clock.step(1)
+      }
+    }
+  }
+
 }
 //
 //
