@@ -67,8 +67,9 @@ class IcestickBlink(val use_pll: Boolean = false) extends RawModule {
 //      val blink = Module(new Blink(24, NaturalCount=true))
       val blink = Module(new Blink(44,
                                   LED_WIDTH=5,
-//                                  COUNTTYPE=CounterTypes.NaturalCount))
-                                  COUNTTYPE=CounterTypes.FullAdderCount))
+                                  COUNTTYPE=CounterTypes.NaturalCount))
+//                                  COUNTTYPE=CounterTypes.FullAdderCount))
+//                                  COUNTTYPE=CounterTypes.PdChain))
       led := blink.io.leds(4)
       red_leds := blink.io.leds(3,0)
     }

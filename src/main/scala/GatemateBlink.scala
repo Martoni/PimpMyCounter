@@ -33,7 +33,8 @@ class GatemateBlink extends RawModule {
       val blink = Module(new Blink(44,
                                   LED_WIDTH=8,
 //                                  COUNTTYPE=CounterTypes.NaturalCount))
-                                  COUNTTYPE=CounterTypes.FullAdderCount))
+//                                  COUNTTYPE=CounterTypes.FullAdderCount))
+                                  COUNTTYPE=CounterTypes.PdChain))
       leds := blink.io.leds
   }
 }
