@@ -22,17 +22,17 @@ class Blink(val COUNT_WIDTH: Int = 32,
     case CounterTypes.NaturalCount => {
       println("Generate NaturalCount")
       val counter = Module(new NaturalCount(COUNT_WIDTH))
-      io.leds := counter.io.count(counter.counterSize-1, counter.counterSize-LED_WIDTH)
+      io.leds := counter.io.count(COUNT_WIDTH-1, COUNT_WIDTH-LED_WIDTH)
     }
     case CounterTypes.PdChain => {
       println("Generate PdChain")
       val counter = Module(new PdChain(COUNT_WIDTH))
-      io.leds := counter.io.count(counter.counterSize-1, counter.counterSize-LED_WIDTH)
+      io.leds := counter.io.count(COUNT_WIDTH-1, COUNT_WIDTH-LED_WIDTH)
     }
     case CounterTypes.FullAdderCount => {
       println("Generate FullAdderCount of " + COUNT_WIDTH + " bits")
       val counter = Module(new FullAdderCount(COUNT_WIDTH))
-      io.leds := counter.io.count(counter.counterSize-1, counter.counterSize-LED_WIDTH)
+      io.leds := counter.io.count(COUNT_WIDTH-1, COUNT_WIDTH-LED_WIDTH)
     }
   }
 }
@@ -43,9 +43,7 @@ class NaturalCount(val COUNT_WIDTH: Int = 32) extends Module {
     val count = Output(UInt(COUNT_WIDTH.W))
   })
 
-  val MAXCOUNT = BigInt(1) << COUNT_WIDTH
-  val counterSize = log2Ceil(MAXCOUNT)
-  val counterValue = RegInit(0.U(counterSize.W))
+  val counterValue = RegInit(0.U(COUNT_WIDTH.W))
   counterValue := counterValue + 1.U
   io.count := counterValue 
 }
@@ -56,8 +54,6 @@ class FullAdderCount(val COUNT_WIDTH: Int = 32) extends Module {
     val count = Output(UInt(COUNT_WIDTH.W))
   })
 
-  val MAXCOUNT = BigInt(1) << COUNT_WIDTH
-  val counterSize = log2Ceil(MAXCOUNT)
   val counterValue = RegInit(0.U(COUNT_WIDTH.W))
   val addition = Module(new FullAdderAddition(COUNT_WIDTH))
   addition.io.a := counterValue
@@ -165,7 +161,6 @@ class PdChain(n: Int = 4) extends Module {
   val io = IO(new Bundle {
     val count = Output(UInt(n.W))
   })
-  val counterSize = n 
   // instantiate PdivTwo modules
   val pDivTwo = for (i <- 0 until n) yield {
     val pdivtwo = Module(new PDivTwo(i == 0))
