@@ -199,39 +199,41 @@ class FullAdderCountTest extends AnyFlatSpec with ChiselScalatestTester {
 //    }
 //  }
 //}
-//
-//
-//class PdChainTest extends AnyFlatSpec with ChiselScalatestTester {
-//  behavior of "PdChainTest"
-//
-//  val nsize = 4 
-//
-//  def pcount_decode(n: Int, b: BigInt): BigInt = {
-//    var y: BigInt = b
-//    for(k: Int <- 1 until n) {
-//      if((y & ((1<<k) - 1))  < k){
-//        y = y ^ (1<<k)
-//      }
-//    }
-//    y
-//  }
-//
-//  it should " count strangely " in {
-//    test(new PdChain(nsize)) { dut =>
-//      for(i <- 0 until (1<<nsize)) {
-//        val value = dut.io.count.peek().litValue
-//        val naturalvalue = pcount_decode(nsize, value)
-//        println("[" + i + "] raw -> " + value + " natural -> " + naturalvalue)
-//        assert(i == naturalvalue)
-//        dut.clock.step(1)
-//      }
-//      val value = dut.io.count.peek().litValue
-//      val naturalvalue = pcount_decode(nsize, value)
-//      assert(0 == naturalvalue)
-//    }
-//  }
-//}
-//
+
+
+class PdChainTest extends AnyFlatSpec with ChiselScalatestTester {
+  behavior of "PdChainTest"
+
+  val nsize = 5 
+
+  def pcount_decode(n: Int, b: BigInt): BigInt = {
+    var y: BigInt = b
+    for(k: Int <- 1 until n) {
+      if((y & ((1<<k) - 1))  < k){
+        y = y ^ (1<<k)
+      }
+    }
+    y
+  }
+
+  it should " count strangely " in {
+    test(new PdChain(nsize)) { dut =>
+      for(i <- 0 until (1<<nsize)) {
+        val value = dut.io.count.peek().litValue
+        val naturalvalue = pcount_decode(nsize, value)
+        val bvalue = f"${value.toString(2)}%5s".replaceAll("\\s", "0")
+        val bnatval= f"${naturalvalue.toString(2)}%5s".replaceAll("\\s", "0")
+        println(f"Step $i%03d raw -> $value%03d ($bvalue), natural ->  $naturalvalue%3d ($bnatval)")
+        assert(i == naturalvalue)
+        dut.clock.step(1)
+      }
+      val value = dut.io.count.peek().litValue
+      val naturalvalue = pcount_decode(nsize, value)
+      assert(0 == naturalvalue)
+    }
+  }
+}
+
 //class BlinkAddTest extends AnyFlatSpec with ChiselScalatestTester {
 //  behavior of "BlinkAddTest"
 //
