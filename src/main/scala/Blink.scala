@@ -229,6 +229,7 @@ class PDivTwo(init: Boolean = false) extends Module {
       val p = Output(UInt(1.W))
   })
 
+  /* Déclaration des deux registres */
   val reg0 = RegInit(if(init) 0.U else 1.U)
   val reg1 = RegInit(if(init) 1.U else 0.U)
 
@@ -250,16 +251,16 @@ class PdChain(n: Int = 4) extends Module {
     val pdivtwo = Module(new PDivTwo(i == 0))
     pdivtwo
   }
-  val pDivTwo_io = VecInit(pDivTwo.map(_.io))
 
   // connect together
-  pDivTwo_io(0).en := 1.U(1.W)
   for(i <- 1 until n) {
-    pDivTwo_io(i).en := pDivTwo_io(i-1).p
+    pDivTwo(i).io.en := pDivTwo(i-1).io.p
   }
 
-  val countValue = for (i <- 0 until n) yield pDivTwo_io(i).q
+  /* initialize */
+  pDivTwo(0).io.en := 1.U(1.W)
 
+  val countValue = for (i <- 0 until n) yield pDivTwo(i).io.q
   io.count := countValue.reverse.reduce(_ ## _)
 }
 
