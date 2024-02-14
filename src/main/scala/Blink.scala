@@ -261,7 +261,7 @@ class PdChain(n: Int = 4) extends Module {
   pDivTwo(0).io.en := 1.U(1.W)
 
   val countValue = for (i <- 0 until n) yield pDivTwo(i).io.q
-  io.count := countValue.reverse.reduce(_ ## _)
+  io.count := countValue.reverse.reduceLeft(_ ## _)
 }
 
 object PdChain extends App {
