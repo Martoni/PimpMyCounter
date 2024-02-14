@@ -15,7 +15,7 @@ $(TOP).asc: $(TOP).json $(PINOUT)
 	grep "Max frequency" log_pnr.txt
 
 $(TOP).json: $(VERILOGDIR)/$(TOP).v
-	$(YOSYS) -p 'synth_ice40 -top $(TOP) -json $@' $<
+	$(YOSYS) -p 'synth_ice40 -top $(TOP) -json $@' $< > log_synth.txt
 
 $(VERILOGDIR)/$(TOP).v: $(SCALASRCDIR)/$(TOP).scala
 	cd $(VERILOGDIR);sbt 'runMain $(TOP)'
