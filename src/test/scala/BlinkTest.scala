@@ -34,7 +34,7 @@ class FullPGAdderTest extends AnyFlatSpec with ChiselScalatestTester {
     test(new FullPGAdder()) { dut =>
       val full_adder_truth_table = List(
         /* a, b, cin,    s, p, g */
-          (0, 0, 0,      0, 0, 0), 
+          (0, 0, 0,      0, 0, 0),
           (0, 0, 1,      1, 0, 0),
           (0, 1, 0,      1, 1, 0),
           (0, 1, 1,      0, 1, 0),
@@ -62,7 +62,7 @@ class FullAdderTest extends AnyFlatSpec with ChiselScalatestTester {
     test(new FullAdder()) { dut =>
       val full_adder_truth_table = List(
         /* a, b, cin, cout, s */
-          (0, 0, 0,      0, 0), 
+          (0, 0, 0,      0, 0),
           (0, 0, 1,      0, 1),
           (0, 1, 0,      0, 1),
           (0, 1, 1,      1, 0),
@@ -89,7 +89,7 @@ class CarryLookAheadTest extends AnyFlatSpec with ChiselScalatestTester {
       dut.io.p(0).poke(false.B)
       dut.io.g(0).poke(true.B)
 
-      assert(dut.io.c(1).peek().litValue == 1) 
+      assert(dut.io.c(1).peek().litValue == 1)
 
       dut.io.p(1).poke(true.B)
       dut.io.g(1).poke(false.B)
@@ -204,7 +204,7 @@ class FullAdderCountTest extends AnyFlatSpec with ChiselScalatestTester {
 class PdChainTest extends AnyFlatSpec with ChiselScalatestTester {
   behavior of "PdChainTest"
 
-  val nsize = 4 
+  val nsize = 4
 
   def pcount_decode(n: Int, b: BigInt): BigInt = {
     var y: BigInt = b
@@ -236,7 +236,7 @@ class PdChainTest extends AnyFlatSpec with ChiselScalatestTester {
 //  behavior of "BlinkAddTest"
 //
 //  it should "count correctly" in {
-//    val rsize = 8 
+//    val rsize = 8
 //    test(new BlinkAdder(dbg=true, rsize=rsize)) { dut =>
 //      val rsize = dut.rsize
 //      val maxvalue = pow(2, rsize).toInt
